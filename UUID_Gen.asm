@@ -11,32 +11,27 @@ Program:
 	MOV DS, AX
 	
 InnitialIns:
-	MOV DL, 0Ah									;Salto de linea
-	MOV AH, 02h
-	INT 21h
+
+	CALL newline
+
 	MOV DX, OFFSET innitialInstructions
 	MOV AH, 09h
 	INT 21h
-	
-	MOV DL, 0Ah									;Salto de linea
-	MOV AH, 02h
-	INT 21h
+
+	CALL newline
 	
 	MOV DX, OFFSET firstExInstruction
 	MOV AH, 09h
 	INT 21h
-	
-	MOV DL, 0Ah									;Salto de linea
-	MOV AH, 02h
-	INT 21h
+
+	CALL newline
 	
 	MOV DX, OFFSET secondExInstruction
 	MOV AH, 09h
 	INT 21h
+
+	CALL newline
 	
-	MOV DL, 0Ah									;Salto de linea
-	MOV AH, 02h
-	INT 21h	
 	;Leer Opcion seleccionada por el teclado
 	MOV AH, 01h
 	INT 21h
@@ -44,21 +39,38 @@ InnitialIns:
 	
 	CMP AL, 31h									;Evaluar si se selecciono la opcion 1
 	JE FirstExercise
+
 	CMP AL, 32h									;Evaluar si es el segundo ejercicio
 	JE SecondExercise
-	JMP Finalize								;Cualquier tecla que no sea 1 o 2 quiere decir que quiere salir del programa
 
+	JMP Finalize							;Cualquier tecla que no sea 1 o 2 quiere decir que quiere salir del programa
+;--------------------------------------------------
 FirstExercise:
-	MOV DL, 0Ah									;Salto de linea
-	MOV AH, 02h
-	INT 21h		
+	CALL newline
+
+	;Primera serie
+
 	JMP InnitialIns
+;--------------------------------------------------
 SecondExercise:
-	MOV DL, 0Ah									;Salto de linea
-	MOV AH, 02h
-	INT 21h	
+	CALL newline
+
+	;Segunda serie
+
 	JMP InnitialIns
+;--------------------------------------------------
+	;Procedimiento para imprimir salto de linea
+	newline proc near
+
+	MOV DL, 0Ah		
+	MOV AH, 02h
+	INT 21h
+
+	ret
+	newline endp
+;--------------------------------------------------
 Finalize:
 	MOV AH, 4Ch
 	INT 21h
+
 END Program
