@@ -1,3 +1,4 @@
+;Generar timespan con registros de 32 bits
 .model small
 .386
 .data
